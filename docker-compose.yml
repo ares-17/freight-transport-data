@@ -34,4 +34,9 @@ services:
     ports:
       - 8081:8081
 
-
+  neodash:
+    image: nielsdejong/neodash
+    ports:
+      - 5005:5005
+    depends_on:
+     - neo4j
