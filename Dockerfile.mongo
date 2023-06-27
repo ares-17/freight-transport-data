@@ -1,8 +1,0 @@
-# Utilizza un'immagine di base che includa MongoDB
-FROM mongo:4.0
-
-# Copia lo script JavaScript nella directory /docker-entrypoint-initdb.d del container
-COPY mongo/dump/init-mongo.js /docker-entrypoint-initdb.d/
-
-# Imposta i permessi di esecuzione per lo script JavaScript
-RUN chmod +x /docker-entrypoint-initdb.d/init-mongo.js

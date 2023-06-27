@@ -1,0 +1,7 @@
+FROM node:lts-slim
+
+WORKDIR /app
+COPY ./mongo/node/package.json ./
+RUN npm install
+
+CMD ["npm", "start"]
