@@ -8,7 +8,11 @@ function mapCoordinates(coordinate) {
 }
 
 function mapStreetToCoordinates(street) {
-  return street.geometry.coordinates[0].map(coord => mapCoordinates(coord))
+  return {
+    coords: street.geometry.coordinates[0].map(coord => mapCoordinates(coord)),
+    traffic: 0,
+    velocity: 0
+  }
 }
 
 const document = { name: 'Anderlect' }
