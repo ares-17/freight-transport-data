@@ -1,10 +1,10 @@
 import data from './dataset/Anderlecht_streets.json' assert { type: "json" };
 
 function mapCoordinates(coordinate) {
-  return {
-    latitude: coordinate[1],
-    longitude: coordinate[0],
-  }
+  return [
+    coordinate[1],
+    coordinate[0]
+  ]
 }
 
 function mapStreetToCoordinates(street) {
