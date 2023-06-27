@@ -15,15 +15,22 @@ services:
     volumes:
       - ./neo4j/plugins:/plugins
 
+  neodash:
+    image: nielsdejong/neodash
+    container_name: neodash
+    ports:
+      - 5005:5005
+    depends_on:
+     - neo4j
+
   mongo:
     image: mongo:4.0
     container_name: mongo
     hostname: mongo
+    volumes:
+      - mongo-volume:/data/db
     ports:
       - 27017:27017
-    volumes:
-      - ./mongo/dump:/dump
-      - ./mongo/dump/init.sh:/docker-entrypoint-initdb.d/init.sh
 
   mongo-express:
     image: mongo-express
@@ -33,10 +40,18 @@ services:
       - mongo
     ports:
       - 8081:8081
-
-  neodash:
-    image: nielsdejong/neodash
-    ports:
-      - 5005:5005
+    
+  node-init:
+    build: 
+      context: .
+      dockerfile: Dockerfile.Node
+    container_name: node-init
+    volumes:
+      - ./mongo/node/dataset:/app/dataset
+      - ./mongo/node/init.js:/app/init.js
+      - ./mongo/node/main.js:/app/main.js
     depends_on:
-     - neo4j
+      - mongo
+
+volumes:
+ mongo-volume:
