@@ -17,14 +17,6 @@ services:
       - ./neo4j/plugins:/plugins
       - neo4j-data:/data
 
-  neodash:
-    image: nielsdejong/neodash
-    container_name: neodash
-    ports:
-      - 5005:5005
-    depends_on:
-     - neo4j
-
   mongo:
     image: mongo:4.0
     container_name: mongo
@@ -59,9 +51,11 @@ services:
     container_name: notebook
     build:
       context: .
-      dockerfile: Dockerfile.python
+      dockerfile: Dockerfile.notebook
     ports:
       - 1000:8888
+    volumes:
+      - ./neo4j/notebook:/home/jovyan/work
     depends_on:
       - neo4j
 
