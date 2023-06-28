@@ -12,6 +12,7 @@ services:
       - "NEO4J_ACCEPT_LICENSE_AGREEMENT=yes"
       - "NEO4J_AUTH=neo4j/admin"
       -  NEO4JLABS_PLUGINS=["apoc"]
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.\\\*
     volumes:
       - ./neo4j/plugins:/plugins
       - neo4j-data:/data
@@ -53,6 +54,16 @@ services:
       - ./mongo/node/main.js:/app/main.js
     depends_on:
       - mongo
+
+  notebook:
+    container_name: notebook
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    ports:
+      - 1000:8888
+    depends_on:
+      - neo4j
 
 volumes:
   mongo-volume:
