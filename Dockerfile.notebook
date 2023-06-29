@@ -1,0 +1,8 @@
+FROM jupyter/minimal-notebook:python-3.11.4
+
+RUN pip install --upgrade pip
+RUN pip install folium neo4j geopandas
+
+# set a token
+COPY ./neo4j/notebook/jupyter_notebook_config.py /home/jovyan/.jupyter/jupyter_notebook_config.py
+ENV JUPYTER_TOKEN d8a667f95e2c76c0c5accc9b78cb1eb0509f07fca05603fc

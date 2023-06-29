@@ -56,7 +56,7 @@ const min = 1
 
 // coords: getCenter(street.geometry.coordinates[0]),
 function mapStreetToCoordinates(street) {
-  const coords = getFixedArrayPolygon(street.geometry.coordinates[0], 8);
+  const coords = getFixedArrayPolygon(street.geometry.coordinates[0], 6);
   return {
     //coords: street.geometry.coordinates[0].map(coord => mapCoordinates(coord)),
     coords : coords,
