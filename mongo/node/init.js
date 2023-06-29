@@ -1,31 +1,18 @@
-import data from './dataset/Anderlecht_streets.json' assert { type: "json" };
+import anderlecht from './dataset/Anderlecht_streets.json' assert { type: "json" };
+import belgium from './dataset/Belgium_streets.json' assert { type: "json" };
+import bruxelles from './dataset/Bruxelles_streets.json' assert { type: "json" };
+//import data from './dataset/bruxelles.json' assert { type: "json" };
 
-/*
-function getCenter(coordinates) {
-  let south = coordinates[0]
-  let north = coordinates[0]
-  let ovest = coordinates[0]
-  let est = coordinates[0]
+const max = 10
+const min = 1
+const street_coordinates = 6
+const cities = [
+  { name: 'anderlecht', data: anderlecht },
+  { name: 'belgium', data: belgium },
+  { name: 'bruxelles', data: bruxelles }
+]
 
-  for (const coord of coordinates) {
-    if (south[0] > coord[0]) {
-      south = coord
-    } else if (north[0] < coord[0]) {
-      north = coord
-    } else if (ovest[1] < coord[1]) {
-      ovest = coord
-    } else if (est[1] > coord[1]) {
-      est = coord
-    }
-  }
-  let latitude = (south[0] + north[0]) / 2
-  let longitude = (ovest[1] + est[1]) / 2
-  let center = [latitude, longitude]
-  console.log(center)
-  return center
-} */
-
-function getFixedArrayPolygon(array, size){
+function getFixedArrayPolygon(array, size) {
   if (array.length === 0 || array.length <= size) {
     return array;
   }
@@ -44,34 +31,24 @@ function getFixedArrayPolygon(array, size){
   return result
 }
 
-function mapCoordinates(coordinate) {
-  return [
-    coordinate[1],
-    coordinate[0]
-  ]
-}
-
-const max = 10
-const min = 1
-
-// coords: getCenter(street.geometry.coordinates[0]),
 function mapStreetToCoordinates(street) {
-  const coords = getFixedArrayPolygon(street.geometry.coordinates[0], 6);
+  const coords = getFixedArrayPolygon(street.geometry.coordinates[0], street_coordinates);
   return {
-    //coords: street.geometry.coordinates[0].map(coord => mapCoordinates(coord)),
-    coords : coords,
+    coords: coords,
     traffic: Math.random() * (max - min) + min,
     velocity: 0
   }
 }
 
-const document = { name: 'Anderlect' }
-const streets = data.features
-document.streets = streets.map(street => mapStreetToCoordinates(street))
-
+const documents = cities.map(city => {
+  return {
+    name: city.name,
+    streets: city.data.features.map(street => mapStreetToCoordinates(street))
+  }
+})
 
 async function execute(client) {
-  await client.db('mydb').collection('polygons').insertOne(document);
+  await client.db('mydb').collection('polygons').insertMany(documents);
 }
 
 export { execute }
