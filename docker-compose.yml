@@ -35,11 +35,11 @@ services:
     ports:
       - 8081:8081
     
-  node-init:
+  mongo-init:
     build: 
       context: .
-      dockerfile: Dockerfile.Node
-    container_name: node-init
+      dockerfile: Dockerfile.mongo-init
+    container_name: mongo-init
     volumes:
       - ./mongo/node/dataset:/app/dataset
       - ./mongo/node/init.js:/app/init.js
