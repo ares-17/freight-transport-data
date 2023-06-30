@@ -34,16 +34,16 @@ services:
       - mongo
     ports:
       - 8081:8081
-    
+
   mongo-init:
     build: 
       context: .
-      dockerfile: Dockerfile.mongo-init
+      dockerfile: Dockerfile.pandas-init
     container_name: mongo-init
     volumes:
       - ./mongo/node/dataset:/app/dataset
-      - ./mongo/node/init.js:/app/init.js
-      - ./mongo/node/main.js:/app/main.js
+      - ./mongo/node/init.py:/app/init.py
+      - ./mongo/node/main.py:/app/main.py
     depends_on:
       - mongo
 
