@@ -47,8 +47,6 @@ for city in cities:
     }
     documents.append(doc)
 
-async def execute(client):
-    client["mydb"]["polygons"].insert_many(documents)
 
 """
 ---- CSV ----
@@ -64,15 +62,24 @@ def trasform_csv(file):
     df.sort_values(by='index_street', inplace=True)
     grouped = df.groupby('index_street')
 
-    return df
+    return grouped
 
 file_path = ['./dataset/And_15min_0101_0103_2019.csv', './dataset/And_15min_0506_1610_2021.csv', './dataset/And_15min_1303_0606_2021.csv']
 
-start_time = time.time()
 
-anderlecht_data = []
-for i in range(len(file_path)):
-    anderlecht_data.append(trasform_csv(file_path[i]))
+async def execute(client):
+    client["mydb"]["polygons"].insert_many(documents)
 
-elapsed_time = time.time() - start_time
-print("Tempo di esecuzione:", elapsed_time, "secondi")
+    for i in range(len(file_path)):
+        grouped_df = trasform_csv(file_path[i])
+        events_period = []
+        for group_name, group_data in grouped_df:
+            events = []
+            for _, row in group_data.iterrows():
+                events.append({ "index_street" : row['index_street'], "traffic": row['traffic'], "velocity" : row['velocity']})
+            events_streets = { "index": group_data, "events": events}
+            events_period.append(events_streets)
+
+        client["mydb"]["anderlecht"][f"period-{i+1}"].insert_many(events_period)
+        print(f"executed period {i+1}")
+
