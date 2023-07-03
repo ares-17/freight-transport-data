@@ -15,6 +15,12 @@ def trasform_csv(file):
 
 def document_streets_period(grouped_df):
     period_streets = [] 
+    i = 0
     for group_name, group_data in grouped_df:
-        period_streets.append({ 'id' : group_name, 'events': group_data.to_dict('records') })
+        period_streets.append({ 
+            'id' : i, 
+            'events': group_data.to_dict('records'),
+            'traffic_mean':  group_data['traffic'].mean(),
+            'velocity_mean':  group_data['velocity'].mean()})
+        i = i + 1
     return period_streets
