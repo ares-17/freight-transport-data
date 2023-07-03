@@ -2,6 +2,8 @@ import json
 from random import random
 import pandas as pd
 import time
+from mapcsv import trasform_csv
+from mapcsv import document_streets_period
 
 anderlecht = json.load(open('./dataset/Anderlecht_streets.json'))
 belgium = json.load(open('./dataset/Belgium_streets.json'))
@@ -39,47 +41,27 @@ def map_street_to_coordinates(street):
         "velocity": 0
     }
 
-documents = []
+cities_doc = []
 for city in cities:
     doc = {
         "name": city["name"],
         "streets": [map_street_to_coordinates(street) for street in city["data"]["features"]]
     }
-    documents.append(doc)
+    cities_doc.append(doc)
 
 
-"""
----- CSV ----
-"""
-
-def trasform_csv(file):
-    df = pd.read_csv(file, header=None)
-    df = df.rename(columns={0: 'index_row', 1: 'index_street', 2: 'traffic', 3: 'velocity'})
-
-    int_columns = df.columns[1:]
-    df[int_columns] = df[int_columns].astype(int)
-
-    df.sort_values(by='index_street', inplace=True)
-    grouped = df.groupby('index_street')
-
-    return grouped
-
-file_path = ['./dataset/And_15min_0101_0103_2019.csv', './dataset/And_15min_0506_1610_2021.csv', './dataset/And_15min_1303_0606_2021.csv']
+file_path = {
+    'anderlect': ['./dataset/And_15min_0101_0103_2019.csv', './dataset/And_15min_0506_1610_2021.csv', './dataset/And_15min_1303_0606_2021.csv'],
+    'bruxelles' : ['./dataset/Bxl_15min_0101_0103_2019.csv', './dataset/Bxl_15min_0506_1610_2021.csv', './dataset/Bxl_15min_1303_0606_2021.csv'],
+    #'belgium': []
+}
 
 
 async def execute(client):
-    client["mydb"]["polygons"].insert_many(documents)
+    client["mydb"]["polygons"].insert_many(cities_doc)
 
-    for i in range(len(file_path)):
-        grouped_df = trasform_csv(file_path[i])
-        events_period = []
-        for group_name, group_data in grouped_df:
-            events = []
-            for _, row in group_data.iterrows():
-                events.append({ "index_street" : row['index_street'], "traffic": row['traffic'], "velocity" : row['velocity']})
-            events_streets = { "index": group_data, "events": events}
-            events_period.append(events_streets)
-
-        client["mydb"]["anderlecht"][f"period-{i+1}"].insert_many(events_period)
-        print(f"executed period {i+1}")
-
+    for property_name, periods in file_path.items():
+        for i in range(len(periods)):
+            grouped_df = trasform_csv(periods[i])
+            period_streets = document_streets_period(grouped_df)
+            client["mydb"][f"{property_name}-period-{i+1}"].insert_many(period_streets)

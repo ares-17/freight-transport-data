@@ -44,6 +44,7 @@ services:
       - ./mongo/node/dataset:/app/dataset
       - ./mongo/node/init.py:/app/init.py
       - ./mongo/node/main.py:/app/main.py
+      - ./mongo/node/mapcsv.py:/app/mapcsv.py
     depends_on:
       - mongo
 
