@@ -24,7 +24,7 @@ def get_fixed_array_polygon(array, size):
 
     result = [array[0]]
     size -= 2
-    step = len(array)
+    step = len(array) // size
 
     for i in range(size):
         index = i * step % len(array)
@@ -35,11 +35,7 @@ def get_fixed_array_polygon(array, size):
 
 def map_street_to_coordinates(street):
     coords = get_fixed_array_polygon(street["geometry"]["coordinates"][0], street_coordinates)
-    return {
-        "coords": coords,
-        "traffic": random() * (max_val - min_val) + min_val,
-        "velocity": 0
-    }
+    return { "coords": coords }
 
 cities_doc = []
 for city in cities:
@@ -51,7 +47,7 @@ for city in cities:
 
 
 file_path = {
-    'anderlect': ['./dataset/And_15min_0101_0103_2019.csv', './dataset/And_15min_0506_1610_2021.csv', './dataset/And_15min_1303_0606_2021.csv'],
+    'anderlecht': ['./dataset/And_15min_0101_0103_2019.csv', './dataset/And_15min_0506_1610_2021.csv', './dataset/And_15min_1303_0606_2021.csv'],
     'bruxelles' : ['./dataset/Bxl_15min_0101_0103_2019.csv', './dataset/Bxl_15min_0506_1610_2021.csv', './dataset/Bxl_15min_1303_0606_2021.csv'],
     #'belgium': []
 }
