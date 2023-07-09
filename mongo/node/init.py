@@ -47,8 +47,9 @@ for city in cities:
 
 
 file_path = {
-    'anderlecht': ['./dataset/And_15min_0101_0103_2019.csv', './dataset/And_15min_0506_1610_2021.csv', './dataset/And_15min_1303_0606_2021.csv'],
-    'bruxelles' : ['./dataset/Bxl_15min_0101_0103_2019.csv', './dataset/Bxl_15min_0506_1610_2021.csv', './dataset/Bxl_15min_1303_0606_2021.csv'],
+    'anderlecht': ['./dataset/And_15min_0101_0103_2019.csv'],
+    #'anderlecht': ['./dataset/And_15min_0101_0103_2019.csv', './dataset/And_15min_0506_1610_2021.csv', './dataset/And_15min_1303_0606_2021.csv'],
+    #'bruxelles' : ['./dataset/Bxl_15min_0101_0103_2019.csv', './dataset/Bxl_15min_0506_1610_2021.csv', './dataset/Bxl_15min_1303_0606_2021.csv'],
     #'belgium': []
 }
 
@@ -59,5 +60,6 @@ async def execute(client):
     for property_name, periods in file_path.items():
         for i in range(len(periods)):
             grouped_df = trasform_csv(periods[i])
+            print("inizio "+ property_name)
             period_streets = document_streets_period(grouped_df)
             client["mydb"][f"{property_name}-period-{i+1}"].insert_many(period_streets)

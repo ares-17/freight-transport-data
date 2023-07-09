@@ -1,6 +1,7 @@
 # Table of contents
 - [Technology stack](#technology-stack)
 - [How to install](#how-to-install)
+- [How to use](#how-to-use)
 - [Samples](#samples)
 
 A simple project based on [freight transport data](https://www.kaggle.com/datasets/giobbu/belgium-obu) which produces spatio-temporal analysis with graphs and maps on the characteristics of the dataset. <br>
@@ -11,7 +12,6 @@ A simple project based on [freight transport data](https://www.kaggle.com/datase
     <img src="./samples/neo4j.svg" height="50" style="margin-right: 20px">
     <img src="./samples/MongoDB_ForestGreen.png" width="110" style="margin-right: 20px">
     <img src="./samples/jupyter.png" height="50" style="margin-right: 25px">
-    <img src="./samples/javascript-logo.png" height="46" style="margin-right: 25px">
     <img src="./samples/python-logo-only.png" height="50" style="margin-right: 20px">
 </div>
 
@@ -22,7 +22,7 @@ The data are then read from the Neo4j database, container **neo4j**, which with 
 <br>
 I dati così ricavati sono rappresentati su grafici e mappe da notebook Jupyter col container **notebook**.
 
-# How to use
+# How to install
 To facilitate project installation and sharing, the technology stack is based on docker. <br>
 Place in the main folder of the project and execute:
 ```sh
@@ -36,6 +36,19 @@ docker-compose down
 docker-compose up -d --build --remove-orphans
 ```
 Only on first run enter following token in notebook web page, that is present in **Dockerfile.notebook** file.
+
+# How to use
+To access docker containers, ports are exposed:
+- the 1000 port to access Jupyter
+- the 7474 to access the Neo4j page
+- the 8081 to access the Mongo Express GUI
+<!-- -->
+For normal use, it is recommended to access port **1000** directly to populate the Neo4j database and to perform data analysis queries.
+Accessing the Jupyter container the first time will require the token found in the **Dockerfile.notebook** file. In later versions it will no longer be required.
+<!-- -->
+Database data is saved in ad-hoc volumes to ensure its permanence even after any image updates. While for the remaining containers, important session data is saved in the current project as simple files. 
+<!-- -->
+For more information see **docker-compose.yml**.
 # Samples
 When the start command is run, the Mongo database is automatically populated with the dataset data.
 <br>
