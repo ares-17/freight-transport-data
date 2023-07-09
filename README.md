@@ -1,6 +1,7 @@
 # Table of contents
 - [Technology stack](#technology-stack)
 - [How to install](#how-to-install)
+- [How to use](#how-to-use)
 - [Samples](#samples)
 
 A simple project based on [freight transport data](https://www.kaggle.com/datasets/giobbu/belgium-obu) which produces spatio-temporal analysis with graphs and maps on the characteristics of the dataset. <br>
