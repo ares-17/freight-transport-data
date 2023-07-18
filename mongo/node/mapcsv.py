@@ -4,6 +4,7 @@ def trasform_csv(file):
     df = pd.read_csv(file, header=None)
     df = df.rename(columns={0: 'datetime', 1: 'index_street', 2: 'traffic', 3: 'velocity'})
 
+    # seleziono tutte le colonne a partire dalla seconda per associare il tipo int
     int_columns = df.columns[1:]
     df[int_columns] = df[int_columns].astype(int)
 
@@ -11,7 +12,6 @@ def trasform_csv(file):
 
     df.sort_values(by='index_street', inplace=True)
     grouped = df.groupby('index_street')
-    #grouped = grouped.apply(lambda x: x.drop('index_street', axis=1))
     
     return grouped
 
@@ -25,7 +25,6 @@ def grouping_by_date(group_name, group_data):
         events = []
         for group_name_d, group_data_d in group_by_date:
             key = group_name_d.strftime("%Y-%m-%d")
-            #group_data_d = group_data_d.drop(columns=['datetime','index_street','day'])
             events.append({
                 'date' : key,
                 'traffic_sum': group_data_d['traffic'].sum().item(),
@@ -46,7 +45,6 @@ def grouping_by_month(group_name, group_data):
         events = []
         for group_name_m, group_data_m in group_by_month:
             key = group_name_m.strftime("%Y-%m")
-            #group_data_m = group_data_m.drop(columns=['datetime','index_street','day'])
             daily_records = grouping_by_date(group_name_m, group_data_m)
             events.append({
                 'date' : key,

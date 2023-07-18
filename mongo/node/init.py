@@ -9,8 +9,6 @@ anderlecht = json.load(open('./dataset/Anderlecht_streets.json'))
 belgium = json.load(open('./dataset/Belgium_streets.json'))
 bruxelles = json.load(open('./dataset/Bruxelles_streets.json'))
 
-max_val = 10
-min_val = 1
 street_coordinates = 6
 cities = [
     {"name": "anderlecht", "data": anderlecht},
