@@ -9,8 +9,6 @@ anderlecht = json.load(open('./dataset/Anderlecht_streets.json'))
 belgium = json.load(open('./dataset/Belgium_streets.json'))
 bruxelles = json.load(open('./dataset/Bruxelles_streets.json'))
 
-max_val = 10
-min_val = 1
 street_coordinates = 6
 cities = [
     {"name": "anderlecht", "data": anderlecht},
@@ -47,10 +45,8 @@ for city in cities:
 
 
 file_path = {
-    'anderlecht': ['./dataset/And_15min_0101_0103_2019.csv'],
-    #'anderlecht': ['./dataset/And_15min_0101_0103_2019.csv', './dataset/And_15min_0506_1610_2021.csv', './dataset/And_15min_1303_0606_2021.csv'],
-    #'bruxelles' : ['./dataset/Bxl_15min_0101_0103_2019.csv', './dataset/Bxl_15min_0506_1610_2021.csv', './dataset/Bxl_15min_1303_0606_2021.csv'],
-    #'belgium': []
+    'anderlecht': ['./dataset/And_15min_0101_0103_2019.csv', './dataset/And_15min_0506_1610_2021.csv', './dataset/And_15min_1303_0606_2021.csv'],
+    'bruxelles' : ['./dataset/Bxl_15min_0101_0103_2019.csv', './dataset/Bxl_15min_0506_1610_2021.csv', './dataset/Bxl_15min_1303_0606_2021.csv']
 }
 
 
