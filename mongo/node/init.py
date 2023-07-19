@@ -45,10 +45,8 @@ for city in cities:
 
 
 file_path = {
-    'anderlecht': ['./dataset/And_15min_0101_0103_2019.csv'],
-    #'anderlecht': ['./dataset/And_15min_0101_0103_2019.csv', './dataset/And_15min_0506_1610_2021.csv', './dataset/And_15min_1303_0606_2021.csv'],
-    #'bruxelles' : ['./dataset/Bxl_15min_0101_0103_2019.csv', './dataset/Bxl_15min_0506_1610_2021.csv', './dataset/Bxl_15min_1303_0606_2021.csv'],
-    #'belgium': []
+    'anderlecht': ['./dataset/And_15min_0101_0103_2019.csv', './dataset/And_15min_0506_1610_2021.csv', './dataset/And_15min_1303_0606_2021.csv'],
+    'bruxelles' : ['./dataset/Bxl_15min_0101_0103_2019.csv', './dataset/Bxl_15min_0506_1610_2021.csv', './dataset/Bxl_15min_1303_0606_2021.csv']
 }
 
 
