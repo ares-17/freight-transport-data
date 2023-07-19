@@ -38,7 +38,7 @@ docker-compose up -d --build --remove-orphans
 Only on first run enter following token in notebook web page, that is present in **Dockerfile.notebook** file.
 
 # How to use
-In order not to overwhelm the size of the repo, csv files from which to read traffic data are not included; you can [download]([https://www.kaggle.com/datasets/giobbu/belgium-obu](https://www.kaggle.com/datasets/giobbu/belgium-obu?select=Anderlecht_streets.json))  these files. <br>
+In order not to overwhelm the size of the repo, csv files from which to read traffic data are not included; you can [download](https://www.kaggle.com/datasets/giobbu/belgium-obu?select=Anderlecht_streets.json)  these files. <br>
 Given the amount of data and the limited hardware resources available during the testing phase, the loading code considers only the data coming from the surveys on Anderlecht and Brussels accomplished with a frequency of 15 minutes. <br>
 To consider other csv files you need to edit the init.py file
 To access docker containers, ports are exposed:
